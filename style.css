@@ -1,0 +1,85 @@
+/* Estilo general */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #1a1a1a;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Escritorio */
+.desktop {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 20px;
+    height: calc(100vh - 60px); /* Altura ajustada para la barra de tareas */
+    background: #1c1c1c;
+}
+
+.icon {
+    width: 100px;
+    text-align: center;
+    margin: 15px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.icon img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 5px;
+}
+
+.icon p {
+    font-size: 14px;
+}
+
+/* Barra de tareas */
+.taskbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #2d2d2d;
+    padding: 5px 20px;
+    color: white;
+}
+
+.start-menu {
+    display: flex;
+    align-items: center;
+}
+
+.start-button {
+    background-color: #0078d4;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.start-button:hover {
+    background-color: #0063b1;
+}
+
+.taskbar-items {
+    display: flex;
+    gap: 15px;
+}
+
+.taskbar-item {
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.taskbar-item:hover {
+    color: #0078d4;
+}

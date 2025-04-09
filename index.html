@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escritorio Windows 11</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-image: url('https://4kwallpapers.com/images/wallpapers/windows-11-dark-mode-stock-official-3840x2400-5630.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            overflow: hidden;
+            color: white;
+        }
+
+        .desktop-icons {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 20px;
+            height: calc(100vh - 50px);
+        }
+
+        .icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80px;
+            cursor: default;
+            text-align: center;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .icon:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .icon img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 5px;
+        }
+
+        .icon span {
+            font-size: 12px;
+            text-shadow: 1px 1px 2px black;
+        }
+
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background-color: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 10px;
+            gap: 8px;
+        }
+
+        .taskbar-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            transition: all 0.2s;
+        }
+
+        .taskbar-icon img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .taskbar-icon:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .start-button {
+            margin-right: 10px;
+        }
+
+        .search-box {
+            position: absolute;
+            left: 60px;
+            width: 300px;
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+
+        .system-tray {
+            position: absolute;
+            right: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .time-date {
+            font-size: 12px;
+            text-align: center;
+            padding: 5px;
+        }
+
+        .widgets-button {
+            position: absolute;
+            left: 10px;
+            width: 30px;
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        .file-simulation {
+            width: 150px;
+            height: 200px;
+            background-color: #fff;
+            border: 2px solid #d1d1d1;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            cursor: pointer;
+        }
+
+        .file-simulation img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+
+        .file-simulation span {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .file-simulation:hover {
+            background-color: #e6e6e6;
+        }
+
+
+
+        /* Estilos para la ventana */
+        .window {
+            width: 300px;
+            height: 200px;
+            background-color: rgb(77, 131, 240);
+            border: 1px solid #0078d4;
+            border-radius: 5px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+
+        .window-header {
+            background-color: #0078d4;
+            color: white;
+            padding: 5px;
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+        }
+
+        .window-header .close-btn {
+            position: absolute;
+            top: 0;
+            right: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            color: white;
+            background: transparent;
+            border: none;
+        }
+
+        .window-content {
+            padding: 20px;
+            font-size: 14px;
+        }
+
+        .window-buttons {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .window-buttons button {
+            padding: 5px 10px;
+            cursor: pointer;
+            border: none;
+            background-color: #0078d4;
+            color: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Iconos del escritorio -->
+    <div class="desktop-icons">
+        <div class="icon">
+            <img src="https://win11.blueedge.me/img/icon/edge.png" alt="Edge">
+            <span>Microsoft Edge</span>
+        </div>
+        <div class="icon" >
+            <img src="https://win11.blueedge.me/img/icon/explorer.png" alt="Explorador">
+            <span>Explorador de archivos</span>
+        </div>
+        <div class="icon , icon-txt"  >
+            <img
+                src="data:image/jpeg;base64,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"><span>TXT</span>
+            </div>
+        <div class="icon">
+            <img src="https://win11.blueedge.me/img/icon/store.png" alt="Store">
+
+            <span>Microsoft Store</span>
+        </div>
+        <div class="icon">
+            <img src="https://win11.blueedge.me/img/icon/bin0.png" alt="Papelera">
+
+            <span>Papelera de reciclaje</span>
+        </div>
+
+    </div>
+
+
+    <!-- Barra de tareas -->
+    <div class="taskbar">
+        <div class="widgets-button">
+            <img src="https://win11.blueedge.me/img/icon/widget.png" width="16" alt="Widgets">
+        </div>
+
+        <div class="search-box">Buscar</div>
+
+        <div class="taskbar-icon start-button">
+            <img src="https://win11.blueedge.me/img/icon/home.png" alt="Inicio">
+        </div>
+
+        <div class="taskbar-icon">
+            <img src="https://win11.blueedge.me/img/icon/search.png" alt="Buscar">
+        </div>
+        <div class="taskbar-icon">
+            <img src="https://win11.blueedge.me/img/icon/explorer.png" alt="Explorador">
+        </div>
+        <div class="taskbar-icon">
+            <img src="https://win11.blueedge.me/img/icon/edge.png" alt="Edge">
+        </div>
+        <div class="taskbar-icon">
+            <img src="https://win11.blueedge.me/img/icon/store.png" alt="Store">
+        </div>
+
+        <div class="system-tray">
+            <div class="taskbar-icon">
+                <img src="https://win11.blueedge.me/img/icon/ui/wifi.png" alt="WiFi">
+            </div>
+            <div class="taskbar-icon">
+                <img src="https://win11.blueedge.me/img/icon/ui/audio3.png" alt="Volumen">
+            </div>
+            <div class="time-date">
+                <div id="current-time">00:00 AM</div>
+                <div id="current-date">01/01/2025</div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Icono que abre la ventana principal -->
+    <div class="icon-txt">Abrir</div>
+
+    <!-- Contenedor para las ventanas -->
+    <div id="windowsContainer"></div>
+
+    <script>
+        function updateDateTime() {
+            // Obtener la fecha y hora actual
+            const now = new Date();
+
+            // Formatear hora
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // la hora 0 debe ser 12
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            const timeString = `${hours}:${minutes} ${ampm}`;
+
+            // Formatear fecha
+            const day = now.getDate();
+            const month = now.getMonth() + 1; // Los meses en JS son 0-indexed (enero = 0)
+            const year = now.getFullYear();
+            const dateString = `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
+
+            // Mostrar hora y fecha
+            document.getElementById('current-time').textContent = timeString;
+            document.getElementById('current-date').textContent = dateString;
+        }
+
+        // Actualizar la fecha y hora cada segundo
+        setInterval(updateDateTime, 1000);
+
+        // Llamar una vez al principio para no esperar un segundo inicial
+        updateDateTime();
+    </script>
+
+<script>
+    // Seleccionamos el elemento del icono
+    const iconDiv = document.querySelector('.icon-txt');
+
+    // Función para crear ventanas dinámicamente
+    function createWindow(lineText, windowId) {
+        // Crear una nueva ventana
+        const windowDiv = document.createElement('div');
+        windowDiv.classList.add('window');
+        windowDiv.id = windowId;
+
+        // Crear la cabecera de la ventana
+        const headerDiv = document.createElement('div');
+        headerDiv.classList.add('window-header');
+        headerDiv.innerHTML = 'Mi Ventana';
+
+        // Botón de cerrar
+        const closeBtn = document.createElement('button');
+        closeBtn.classList.add('close-btn');
+        closeBtn.innerHTML = 'X';
+        closeBtn.onclick = function() {
+            windowDiv.style.display = 'none';
+        };
+        headerDiv.appendChild(closeBtn);
+
+        // Crear el contenido de la ventana
+        const contentDiv = document.createElement('div');
+        contentDiv.classList.add('window-content');
+        contentDiv.innerHTML = lineText;
+
+        // Crear los botones
+        const buttonsDiv = document.createElement('div');
+        buttonsDiv.classList.add('window-buttons');
+        const acceptBtn = document.createElement('button');
+        acceptBtn.innerHTML = 'Aceptar';
+        acceptBtn.onclick = function() {
+            windowDiv.style.display = 'none';
+        };
+        buttonsDiv.appendChild(acceptBtn);
+
+        // Montar todo en la ventana
+        windowDiv.appendChild(headerDiv);
+        windowDiv.appendChild(contentDiv);
+        windowDiv.appendChild(buttonsDiv);
+
+        // Añadir la ventana al contenedor
+        document.getElementById('windowsContainer').appendChild(windowDiv);
+
+        // Mostrar la ventana
+        windowDiv.style.display = 'block';
+    }
+
+    // Función que abre una nueva ventana cada vez que se hace clic en el icono
+    iconDiv.addEventListener('click', function() {
+        // Agregar texto de ejemplo o el texto que quieras
+        const lines = [
+            "Primera línea de texto",
+            "Segunda línea de texto",
+            "Tercera línea de texto",
+            "Cuarta línea de texto"
+        ];
+
+        // Crear una ventana por cada línea de texto
+        lines.forEach((line, index) => {
+            createWindow(line, 'window' + index);
+        });
+    });
+</script>
+    
+</body>
+
+</html>
